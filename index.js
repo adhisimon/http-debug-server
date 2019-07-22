@@ -4,6 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const argv = require('yargs').argv;
 const uniqid = require('uniqid');
+const moment = require('moment');
 
 const app = express();
 
@@ -13,7 +14,7 @@ function createUniqid(req, res, next) {
 }
 
 function dumpIp(req, res, next) {
-    console.log(`*** (${ res.locals.uniqid }) Incoming ${ req.method } request from ${ req.ip }`);
+    console.log(`*** (${ res.locals.uniqid }) ${ moment().format('YYYY-MM-DD HH:mm:ss') } Incoming ${ req.method } request from ${ req.ip }`);
     next();
 }
 
