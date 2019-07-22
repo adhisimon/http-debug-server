@@ -1,0 +1,34 @@
+{
+  "name": "http-debug-server",
+  "version": "0.9.0",
+  "description": "Dummy HTTP server for debuging query string, post data, etc",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "postversion": "git push && git push --tags"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adhisimon/http-debug-server.git"
+  },
+  "keywords": [
+    "http",
+    "dummy",
+    "debug"
+  ],
+  "author": "Adhidarma Hadiwinoto <adhisimon@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/adhisimon/http-debug-server/issues"
+  },
+  "homepage": "https://github.com/adhisimon/http-debug-server#readme",
+  "devDependencies": {
+    "eslint": "^6.1.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "uniqid": "^5.0.3",
+    "yargs": "^13.3.0"
+  }
+}
