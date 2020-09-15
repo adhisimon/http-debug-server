@@ -1,6 +1,6 @@
 {
   "name": "http-debug-server",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "description": "Dummy HTTP server for debuging query string, post data, etc",
   "main": "index.js",
   "scripts": {
