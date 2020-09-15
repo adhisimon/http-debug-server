@@ -1,7 +1,7 @@
 "use strict";
 
 const express = require('express');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 const argv = require('yargs').argv;
 const uniqid = require('uniqid');
 const moment = require('moment');
@@ -18,6 +18,12 @@ function dumpIp(req, res, next) {
     next();
 }
 
+function dumpUserAgent(req, res, next) {
+    console.log(`*** (${ res.locals.uniqid }) User-Agent: ${ req.get('user-agent') }`);
+    next();
+}
+
+
 function dumpUrl(req, res, next) {
     console.log(`*** (${ res.locals.uniqid }) ${ req.method }: ${ req.url }`);
     next();
@@ -30,10 +36,10 @@ function dumpQs(req, res, next) {
 }
 
 function dumpBody(req, res, next) {
-    const data = argv.pretty ? JSON.stringify(req.body, null, 2) : req.body;
+    // const data = argv.pretty ? JSON.stringify(req.body, null, 2) : req.body;
     const contentType = req.get('Content-Type');
 
-    console.log(`*** (${ res.locals.uniqid }) Body (Content-Type: ${ contentType }):`, data);
+    console.log(`*** (${ res.locals.uniqid }) Body (Content-Type: ${ contentType }):`, req.body );
     next();
 }
 
@@ -43,8 +49,10 @@ function closeConnection(req, res) {
 }
 
 app.use(createUniqid);
-app.use(bodyParser.urlencoded({extended: true}));
+// app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.text({ type: '*/*' }));
 app.use(dumpIp);
+app.use(dumpUserAgent);
 app.use(dumpUrl);
 app.use(dumpQs);
 app.use(dumpBody);
