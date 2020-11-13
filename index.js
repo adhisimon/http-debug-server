@@ -23,6 +23,11 @@ function dumpUserAgent(req, res, next) {
     next();
 }
 
+function dumpHeaders(req, res, next) {
+    console.log(`*** (${ res.locals.uniqid }) Headers:`);
+    console.log(JSON.stringify(req.headers, null, 2));
+    next();
+}
 
 function dumpUrl(req, res, next) {
     console.log(`*** (${ res.locals.uniqid }) ${ req.method }: ${ req.url }`);
@@ -53,6 +58,7 @@ app.use(createUniqid);
 app.use(express.text({ type: '*/*' }));
 app.use(dumpIp);
 app.use(dumpUserAgent);
+app.use(dumpHeaders);
 app.use(dumpUrl);
 app.use(dumpQs);
 app.use(dumpBody);
