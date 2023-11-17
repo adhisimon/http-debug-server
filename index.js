@@ -1,5 +1,3 @@
-"use strict";
-
 const express = require('express');
 // const bodyParser = require('body-parser');
 const argv = require('yargs').argv;
@@ -7,6 +5,10 @@ const uniqid = require('uniqid');
 const moment = require('moment');
 
 const app = express();
+
+if (argv.trustProxy) {
+    app.set('trust proxy', argv.trustProxy);
+}
 
 function createUniqid(req, res, next) {
     res.locals.uniqid = uniqid();
@@ -48,9 +50,23 @@ function dumpBody(req, res, next) {
     next();
 }
 
-function closeConnection(req, res) {
+/**
+ *
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ */
+function dump(req, res) {
     console.log('');
-    res.end('OK\n');
+    // res.end('OK\n');
+
+    res.json({
+        remoteIp: req.ip,
+        method: req.method,
+        requestUrl: req.originalUrl,
+        requestHeaders: req.headers,
+        requestQuery: req.query,
+        requestBody: req.body,
+    })
 }
 
 app.use(createUniqid);
@@ -62,7 +78,7 @@ app.use(dumpHeaders);
 app.use(dumpUrl);
 app.use(dumpQs);
 app.use(dumpBody);
-app.use(closeConnection);
+app.use(dump);
 
 const listenPort = argv.port || 8080;
 app.listen(listenPort, function() {
