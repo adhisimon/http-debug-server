@@ -17,4 +17,5 @@ $ node index
 ```
   --port=<PORT>
   --pretty
+  --trust-proxy=<PROXY-IP>
 ```
